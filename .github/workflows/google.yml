@@ -2,21 +2,21 @@ name: Build and Deploy on GKE
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "preprod" ]
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   GAR_LOCATION: europe-west1
-  GKE_CLUSTER: odoodevelopment   # TODO: update to cluster name
+  GKE_CLUSTER: odoopreprod   # TODO: update to cluster name
   GKE_ZONE: europe-west1-d   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: odoodevelopment # TODO: update to deployment name
-  IMAGE: odoodevelopment
+  DEPLOYMENT_NAME: odoopreprod # TODO: update to deployment name
+  IMAGE: odoopreprod
 
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: odoodevelopment
+    environment: odoopreprod
 
     steps:
     - name: Checkout
