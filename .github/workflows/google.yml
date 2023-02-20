@@ -38,17 +38,11 @@ jobs:
       with:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
-              
-    # Build the Docker image
-    - name: Build
+
+    - name: Deploy new code
       run: |-
-        docker build \
-          --tag "eu.gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg GITHUB_REF="$GITHUB_REF" \
-          . 
-          
-    # Push the Docker image to Google Container Registry
-    - name: Publish
+         kubectl exec deploy/odoodev -- /bin/bash  -c odoo --db_host ************* --db_port **** -d *************** -u ******************** --db_user *********** --db_password *************
+         
+    - name: Restart_the_service
       run: |-
-        docker push "eu.gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
+        kubectl rollout restart deployment $DEPLOYMENT_NAME
